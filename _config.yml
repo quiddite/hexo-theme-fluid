@@ -463,9 +463,7 @@ open_graph:
 footer:
   # 页脚第一行文字的 HTML，建议保留 Fluid 的链接，用于向更多人推广本主题
   # HTML of the first line of the footer, it is recommended to keep the Fluid link to promote this theme to more people
-  content: '
-    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-            <span id="busuanzi_container_site_pv">total visits: <span id="busuanzi_value_site_pv"></span></span>'
+  content: 
 
   # 展示网站的 PV、UV 统计数
   # Display website PV and UV statistics
