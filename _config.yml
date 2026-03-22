@@ -227,7 +227,7 @@ color:
 # Font
 font:
   font_size: 16px
-  font_family: '"lmroman10-regular", "Palatino", "charter", "Georgia", math, "Songti", "SimSong", "Simsun", sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"'
+  font_family: "Segoe UI, Roboto, 'Helvetica Neue', Arial, sans-serif"
   letter_spacing: 0.02em
   code_font_size: 85%
 
