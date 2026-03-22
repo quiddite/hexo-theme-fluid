@@ -1051,15 +1051,15 @@ links:
   # Member item of page
   items:
     - {
-      title: "Fluid Blog",
-      intro: "主题博客",
-      link: "https://hexo.fluid-dev.com/",
+      title: "arxiv",
+      intro: "geometric-topology",
+      link: "https://arxiv.org/list/math.GT/recent",
       avatar: "/img/favicon.png"
     }
     - {
-      title: "Fluid Docs",
-      intro: "主题使用指南",
-      link: "https://hexo.fluid-dev.com/docs/",
+      title: "amss",
+      intro: "institute lectures",
+      link: "http://www.math.ac.cn/xshd/sxsjz/",
       avatar: "/img/favicon.png"
     }
     - {
