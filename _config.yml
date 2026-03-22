@@ -87,7 +87,7 @@ fun_features:
 
     # 打印速度，数字越大越慢
     # Typing speed, the larger the number, the slower
-    typeSpeed: 80
+    typeSpeed: 100
 
     # 游标字符
     # Cursor character
@@ -465,7 +465,7 @@ footer:
   # HTML of the first line of the footer, it is recommended to keep the Fluid link to promote this theme to more people
   content: '
     <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-            <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>'
+            <span id="busuanzi_container_site_pv">total visits: <span id="busuanzi_value_site_pv"></span></span>'
 
   # 展示网站的 PV、UV 统计数
   # Display website PV and UV statistics
