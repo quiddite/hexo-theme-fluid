@@ -226,7 +226,7 @@ color:
 # 主题字体配置
 # Font
 font:
-  font_size: 100px
+  font_size: 1000px
   font_family: serif, math, "lmroman10-regular", sans-serif, "Palatino", "charter", "Georgia", "Songti", "SimSong", "Simsun", -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"
   letter_spacing: 0.02em
   code_font_size: 85%
@@ -984,7 +984,7 @@ tag:
   banner_img_height: 60
   banner_mask_alpha: 0.3
   tagcloud:
-    min_font: 15
+    min_font: 18
     max_font: 20
     unit: px
     start_color: "#BBBBEE"
