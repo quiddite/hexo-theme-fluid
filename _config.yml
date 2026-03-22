@@ -1052,20 +1052,8 @@ links:
   items:
     - {
       title: "arxiv",
-      intro: "geometric-topology",
+      intro: "geometric topology",
       link: "https://arxiv.org/list/math.GT/recent",
-      avatar: "/img/favicon.png"
-    }
-    - {
-      title: "amss",
-      intro: "institute lectures",
-      link: "http://www.math.ac.cn/xshd/sxsjz/",
-      avatar: "/img/favicon.png"
-    }
-    - {
-      title: "amss",
-      intro: "topology seminar",
-      link: "https://hrzsea.github.io/AMSS-Topology-Seminar/",
       avatar: "/img/favicon.png"
     }
     - {
@@ -1078,6 +1066,18 @@ links:
       title: "pku",
       intro: "geometry",
       link: "https://www.math.pku.edu.cn/kxyj/xsbg/tlb/geometry/",
+      avatar: "/img/favicon.png"
+    }
+    - {
+      title: "amss",
+      intro: "institute lectures",
+      link: "http://www.math.ac.cn/xshd/sxsjz/",
+      avatar: "/img/favicon.png"
+    }
+    - {
+      title: "amss",
+      intro: "topology",
+      link: "https://hrzsea.github.io/AMSS-Topology-Seminar/",
       avatar: "/img/favicon.png"
     }
     - {
@@ -1099,6 +1099,12 @@ links:
       avatar: "/img/favicon.png"
     }
     - {
+      title: "fudan",
+      intro: "topology",
+      link: "https://fudantopology.github.io",
+      avatar: "/img/favicon.png"
+    }
+    - {
       title: "bimsa",
       intro: "member",
       link: "https://www.bimsa.cn/research_detail/memberseminar.html",
@@ -1108,12 +1114,6 @@ links:
       title: "bimsa",
       intro: "topology",
       link: "https://bimsa.net/activity/topsem/",
-      avatar: "/img/favicon.png"
-    }
-    - {
-      title: "fudan",
-      intro: "topology",
-      link: "https://fudantopology.github.io",
       avatar: "/img/favicon.png"
     }
 
