@@ -1063,9 +1063,57 @@ links:
       avatar: "/img/favicon.png"
     }
     - {
-      title: "Fluid Repo",
-      intro: "主题 GitHub 仓库",
-      link: "https://github.com/fluid-dev/hexo-theme-fluid",
+      title: "amss",
+      intro: "topology seminar",
+      link: "https://hrzsea.github.io/AMSS-Topology-Seminar/",
+      avatar: "/img/favicon.png"
+    }
+    - {
+      title: "pku",
+      intro: "topology",
+      link: "https://www.math.pku.edu.cn/kxyj/xsbg/tlb/topology/",
+      avatar: "/img/favicon.png"
+    }
+    - {
+      title: "pku",
+      intro: "geometry",
+      link: "https://www.math.pku.edu.cn/kxyj/xsbg/tlb/geometry/",
+      avatar: "/img/favicon.png"
+    }
+    - {
+      title: "ymsc",
+      intro: "topoogy",
+      link: "https://ymsc.tsinghua.edu.cn/info/1053/2578.htm",
+      avatar: "/img/favicon.png"
+    }
+    - {
+      title: "ymsc",
+      intro: "g2t2",
+      link: "https://ymsc.tsinghua.edu.cn/info/1053/4238.htm",
+      avatar: "/img/favicon.png"
+    }
+    - {
+      title: "simis",
+      intro: "calendar",
+      link: "https://www.simis.cn/calendar2/",
+      avatar: "/img/favicon.png"
+    }
+    - {
+      title: "bimsa",
+      intro: "member",
+      link: "https://www.bimsa.cn/research_detail/memberseminar.html",
+      avatar: "/img/favicon.png"
+    }
+    - {
+      title: "bimsa",
+      intro: "topology",
+      link: "https://bimsa.net/activity/topsem/",
+      avatar: "/img/favicon.png"
+    }
+    - {
+      title: "fudan",
+      intro: "topology",
+      link: "https://fudantopology.github.io",
       avatar: "/img/favicon.png"
     }
 
