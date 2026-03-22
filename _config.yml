@@ -795,7 +795,7 @@ utterances:
 # Based on third-party service
 # See: https://disqus.com
 disqus:
-  shortname:
+  shortname: 
   # 以下为 Disqusjs 支持, 国内用户如果想使用 Disqus 建议配合使用，支持填入多个 apikey，建议自行搭建 api 端点
   # The following are Disqusjs configurations, please ignore if DisqusJS is not required, it supports filling in multiple apikeys, it is recommended to build the API endpoint by yourself
   # See: https://github.com/SukkaW/DisqusJS
@@ -1002,7 +1002,8 @@ about:
   banner_mask_alpha: 0.3
   avatar: /img/avatar.png
   name: "quiddite"
-  intro: "For the <em>beautiful world</em> !"
+  intro: "For the <em>beautiful world</em> ! <br> Ich bin ein Geländer am Strome: fasse mich, wer mich fassen kann! Eure Krücke
+  aber bin ich nicht."
   # 更多图标可从 https://hexo.fluid-dev.com/docs/icon/ 查找，`class` 代表图标的 css class，添加 `qrcode` 后，图标不再是链接而是悬浮二维码
   # More icons can be found from https://hexo.fluid-dev.com/docs/en/icon/  `class` is the css class of the icon. If adding `qrcode`, the icon is no longer a link, but a hovering QR code
   icons:
