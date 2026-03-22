@@ -226,8 +226,8 @@ color:
 # 主题字体配置
 # Font
 font:
-  font_size: 16px
-  font_family: a, "lmroman10-regular", sans-serif, "Palatino", "charter", "Georgia", "Songti", "SimSong", "Simsun", -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"
+  font_size: 100px
+  font_family: math, "lmroman10-regular", sans-serif, "Palatino", "charter", "Georgia", "Songti", "SimSong", "Simsun", -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"
   letter_spacing: 0.02em
   code_font_size: 85%
 
