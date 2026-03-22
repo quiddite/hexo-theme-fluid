@@ -1119,7 +1119,7 @@ links:
     }
     - {
       title: "Fluid",
-      intro: "doc",
+      intro: "docs",
       link: "https://hexo.fluid-dev.com/docs/",
       avatar: "/img/favicon.png"
     }
