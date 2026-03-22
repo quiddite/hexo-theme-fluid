@@ -1117,6 +1117,14 @@ links:
       link: "https://bimsa.net/activity/topsem/",
       avatar: "/img/favicon.png"
     }
+    - {
+      title: "Fluid",
+      intro: "doc",
+      link: "https://hexo.fluid-dev.com/docs/",
+      avatar: "/img/favicon.png"
+    }
+
+    
 
   # 当成员头像加载失败时，替换为指定图片
   # When the member avatar fails to load, replace the specified image
