@@ -1008,7 +1008,7 @@ about:
   icons:
     - { class: "iconfont icon-github-fill", link: "https://github.com/quiddite", tip: "GitHub" }
     - { class: "iconfont icon-mail", link: "mailto:quiddite4dino[at]gmail[dot]com", tip: "e-mail" }
-    - { class: "iconfont icon-map", qrcode: "/img/favicon.png" }
+    - { class: "iconfont icon-map", link: "https://maps.app.goo.gl/BNMFym87MR29pRrH7", tip: "address" }
 
 
 #---------------------------
