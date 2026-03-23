@@ -1,0 +1,22 @@
+@font-face {
+  font-family: 'LM Roman Custom';
+  src: local('Latin Modern Roman'),
+       local('LM Roman 10'),
+       local('LMRoman10-Regular'),
+       url('/fonts/lmroman10-regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 全局覆盖 */
+body,
+.post-content,
+.markdown-body {
+  font-family: 'LM Roman Custom', serif !important;
+}
+
+/* 标题 */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'LM Roman Custom', serif !important;
+}
