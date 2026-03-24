@@ -20,14 +20,25 @@ body,
 h1, h2, h3, h4, h5, h6 {
   font-family: "Palatino", "charter", "Georgia", "Songti", "SimSong", "Simsun", sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji" !important;
 }
-
-body {
+/* ===== 仅作用于 light 模式 ===== */
+html[data-user-color-scheme="light"] body {
   background-color: #e8e0c9;
 }
-#board {
+
+/* ===== 主面板（关键：#board） ===== */
+html[data-user-color-scheme="light"] #board {
   background-color: #fbf4e2 !important;
+  box-shadow: none;          /* 可选：更像论文 */
+  border-radius: 8px;        /* 可选：轻微圆角 */
 }
-.post-content,
-.page-content {
-  background-color: #fbf4e2 !important;
+
+/* ===== 正文区域（避免内部白块） ===== */
+html[data-user-color-scheme="light"] .post-content,
+html[data-user-color-scheme="light"] .page-content {
+  background-color: transparent !important;
+}
+
+/* ===== Markdown 渲染层（防止残留白色） ===== */
+html[data-user-color-scheme="light"] .markdown-body {
+  background-color: transparent !important;
 }
