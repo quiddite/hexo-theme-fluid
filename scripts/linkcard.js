@@ -51,7 +51,7 @@ hexo.extend.tag.register(
 
     const icon =
       meta.icon ||
-      `https://www.google.com/s2/favicons?domain=${domain}`;
+      `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
 
     return `
 <div class="fluid-linkcard">
