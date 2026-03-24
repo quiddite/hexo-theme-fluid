@@ -14,12 +14,26 @@ page.comment = theme.links.comments.type
     <div class="card col-lg-4 col-md-6 col-sm-12">
       <a href="<%= url_for(each.link) %>" class="card-body hover-with-bg" target="_blank" rel="noopener">
         <div class="card-content">
-          <% if (each.avatar || each.image) { %>
-            <div class="link-avatar my-auto">
-              <img src="<%= url_for(each.avatar || each.image) %>" alt="<%= each.title %>"
-                   onerror="this.onerror=null; this.src=this.srcset='<%= url_for(theme.links.onerror_avatar) %>'"/>
-            </div>
-          <% } %>
+          <%
+            let avatar = each.avatar || each.image;
+
+            if (!avatar && each.link) {
+                try {
+                const domain = new URL(each.link).hostname;
+                avatar = "https://www.google.com/s2/favicons?domain=" + domain + "&sz=64";
+                } catch (e) {
+                avatar = theme.links.onerror_avatar;
+                }
+            }
+            %>
+
+        <div class="link-avatar my-auto">
+        <img src="<%= avatar.startsWith('http') ? avatar : url_for(avatar) %>"
+            alt="<%= each.title %>"
+            loading="lazy"
+            referrerpolicy="no-referrer"
+            onerror="this.onerror=null; this.src='<%= url_for(theme.links.onerror_avatar) %>'"/>
+        </div>
           <div class="link-text">
             <div class="link-title"><%- each.title %></div>
             <div class="link-intro"><%- each.intro || '' %></div>
