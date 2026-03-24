@@ -24,9 +24,6 @@ h1, h2, h3, h4, h5, h6 {
 body {
   background-color: #e8e0c9;
 }
-.main-content {
-  background-color: #fbf4e2;
-}
 .post-content,
 .page-content {
   background-color: #fbf4e2 !important;
