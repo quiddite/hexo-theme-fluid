@@ -1,33 +1,87 @@
+'use strict';
+
 const axios = require('axios');
 const cheerio = require('cheerio');
 
 const cache = new Map();
 
 /**
- * 将相对路径转为绝对路径
+ * URL 规范化
  */
-function normalizeUrl(base, url) {
+function normalizeUrl(base, relative) {
   try {
-    return new URL(url, base).href;
+    return new URL(relative, base).href;
   } catch {
-    return url;
+    return relative;
   }
 }
 
 /**
- * 清洗文本（去 HTML + 限长）
+ * 清理文本
  */
-function cleanText(text) {
-  if (!text) return '';
-  return text
-    .replace(/<[^>]+>/g, '')   // 去 HTML 标签
-    .replace(/\s+/g, ' ')      // 合并空白
+function cleanText(str) {
+  return (str || '')
+    .replace(/\s+/g, ' ')
+    .replace(/\n/g, ' ')
     .trim()
-    .slice(0, 120);            // 限制长度
+    .slice(0, 120);
 }
 
 /**
- * 获取 metadata（核心）
+ * 标题去噪
+ */
+function cleanTitle(title) {
+  return (title || '')
+    .replace(/\s*[-|–].*$/, '')
+    .trim()
+    .slice(0, 60);
+}
+
+/**
+ * 获取 favicon（三级 fallback）
+ */
+function resolveIcon($, url) {
+  const u = new URL(url);
+  const origin = u.origin;
+  const hostname = u.hostname;
+
+  let icon =
+    $('link[rel="icon"]').attr('href') ||
+    $('link[rel="shortcut icon"]').attr('href') ||
+    $('link[rel="apple-touch-icon"]').attr('href');
+
+  if (icon) {
+    icon = normalizeUrl(url, icon);
+    return icon;
+  }
+
+  // fallback 1: /favicon.ico
+  return `${origin}/favicon.ico` || 
+         `https://www.google.com/s2/favicons?domain=${hostname}&sz=64`;
+}
+
+/**
+ * 获取描述（严格策略，避免抓正文）
+ */
+function resolveDescription($, url) {
+  let desc =
+    $('meta[property="og:description"]').attr('content') ||
+    $('meta[name="description"]').attr('content');
+
+  if (!desc) {
+    const firstP = $('p').first().text().trim();
+
+    // 严格限制长度，避免抓正文
+    if (firstP.length > 20 && firstP.length < 120) {
+      desc = firstP;
+    }
+  }
+
+  return cleanText(desc);
+}
+
+/**
+ * 获取 metadata
  */
 async function fetchMeta(url) {
   if (cache.has(url)) return cache.get(url);
@@ -36,87 +90,72 @@ async function fetchMeta(url) {
     const { data } = await axios.get(url, {
       timeout: 5000,
       headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
+        'User-Agent':
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120 Safari/537.36'
       }
     });
 
     const $ = cheerio.load(data);
 
-    // 标题
+    // ===== TITLE =====
     let title =
       $('meta[property="og:title"]').attr('content') ||
       $('title').text() ||
       url;
 
-    // 描述（只用 meta，不抓正文）
-    let desc =
-      $('meta[property="og:description"]').attr('content') ||
-      $('meta[name="description"]').attr('content') ||
-      '';
+    title = cleanTitle(title);
 
-    // icon
-    let icon =
-      $('link[rel="icon"]').attr('href') ||
-      $('link[rel="shortcut icon"]').attr('href');
+    // ===== DESCRIPTION =====
+    let desc = resolveDescription($, url);
 
-    if (icon) {
-      icon = normalizeUrl(url, icon);
-    }
+    // ===== ICON =====
+    let icon = resolveIcon($, url);
 
-    // fallback favicon（关键）
+    // ===== 兜底 favicon（确保一定有）
     if (!icon) {
-      const domain = new URL(url).hostname;
-      icon = `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
+      const hostname = new URL(url).hostname;
+      icon = `https://www.google.com/s2/favicons?domain=${hostname}&sz=64`;
     }
 
-    const result = {
-      title: cleanText(title),
-      desc: cleanText(desc),
-      icon
-    };
-
+    const result = { title, desc, icon, url };
     cache.set(url, result);
+
     return result;
+  } catch (err) {
+    // ===== 失败兜底 =====
+    const hostname = new URL(url).hostname;
 
-  } catch (e) {
-    const domain = new URL(url).hostname;
-
-    const fallback = {
+    return {
       title: url,
       desc: '',
-      icon: `https://www.google.com/s2/favicons?domain=${domain}&sz=64`
+      icon: `https://www.google.com/s2/favicons?domain=${hostname}&sz=64`,
+      url
     };
-
-    cache.set(url, fallback);
-    return fallback;
   }
 }
 
 /**
- * 注册 tag: {% linkcard url %}
+ * Hexo Tag: {% linkcard url %}
  */
-hexo.extend.tag.register(
-  'linkcard',
-  async function (args) {
-    const url = args[0];
-    if (!url) return '';
+hexo.extend.tag.register('linkcard', async function(args) {
+  const url = args[0];
+  if (!url) return '';
 
-    const meta = await fetchMeta(url);
+  const meta = await fetchMeta(url);
 
-    return `
-<div class="fluid-linkcard">
-  <a href="${url}" target="_blank" rel="noopener">
-    <div class="card-left">
-      <img src="${meta.icon}" class="card-icon" loading="lazy">
-    </div>
-    <div class="card-right">
-      <div class="card-title">${meta.title}</div>
-      <div class="card-desc">${meta.desc}</div>
-      <div class="card-url">${new URL(url).hostname}</div>
+  return `
+<div class="link-card">
+  <a href="${meta.url}" target="_blank" rel="noopener">
+    <div class="link-card-content">
+      <div class="link-card-icon">
+        <img src="${meta.icon}" loading="lazy" referrerpolicy="no-referrer"/>
+      </div>
+      <div class="link-card-text">
+        <div class="link-card-title">${meta.title}</div>
+        <div class="link-card-desc">${meta.desc}</div>
+      </div>
     </div>
   </a>
 </div>
 `;
-  },
-  { async: true }
-);
+});
