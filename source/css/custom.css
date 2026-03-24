@@ -20,3 +20,10 @@ body,
 h1, h2, h3, h4, h5, h6 {
   font-family: "Palatino", "charter", "Georgia", "Songti", "SimSong", "Simsun", sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji" !important;
 }
+
+body {
+  background-color: #e8e0c9;
+}
+.main-content {
+  background-color: #fbf4e2;
+}
