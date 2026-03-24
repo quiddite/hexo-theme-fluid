@@ -28,3 +28,6 @@ body {
 .page-content {
   background-color: #fbf4e2 !important;
 }
+.main-content .container {
+  background-color: transparent !important;
+}
