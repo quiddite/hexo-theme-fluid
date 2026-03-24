@@ -1,9 +1,7 @@
 'use strict';
 
-const axios = require('axios');
+const request = require('sync-request');
 const cheerio = require('cheerio');
-
-const cache = new Map();
 
 /**
  * URL 规范化
@@ -19,11 +17,11 @@ function normalizeUrl(base, relative) {
 /**
  * 清理文本
  */
-function cleanText(str) {
+function cleanText(str, max = 100) {
   return (str || '')
     .replace(/\s+/g, ' ')
     .trim()
-    .slice(0, 120);
+    .slice(0, max);
 }
 
 /**
@@ -53,13 +51,13 @@ function resolveIcon($, url) {
     return normalizeUrl(url, icon);
   }
 
-  // fallback 1: /favicon.ico
+  // fallback：/favicon.ico
   return `${origin}/favicon.ico` ||
          `https://www.google.com/s2/favicons?domain=${hostname}&sz=64`;
 }
 
 /**
- * 描述（严格策略）
+ * 描述（严格）
  */
 function resolveDescription($) {
   let desc =
@@ -67,10 +65,9 @@ function resolveDescription($) {
     $('meta[name="description"]').attr('content');
 
   if (!desc) {
-    const firstP = $('p').first().text().trim();
-
-    if (firstP.length > 20 && firstP.length < 120) {
-      desc = firstP;
+    const p = $('p').first().text().trim();
+    if (p.length > 20 && p.length < 120) {
+      desc = p;
     }
   }
 
@@ -78,13 +75,11 @@ function resolveDescription($) {
 }
 
 /**
- * 获取 metadata
+ * 主函数（同步）
  */
-async function fetchMeta(url) {
-  if (cache.has(url)) return cache.get(url);
-
+function fetchMeta(url) {
   try {
-    const { data } = await axios.get(url, {
+    const res = request('GET', url, {
       timeout: 5000,
       headers: {
         'User-Agent':
@@ -92,7 +87,8 @@ async function fetchMeta(url) {
       }
     });
 
-    const $ = cheerio.load(data);
+    const html = res.getBody('utf8');
+    const $ = cheerio.load(html);
 
     // ===== TITLE =====
     let title =
@@ -108,19 +104,15 @@ async function fetchMeta(url) {
     // ===== ICON =====
     let icon = resolveIcon($, url);
 
-    // 最终兜底（保证一定有）
+    // 最终兜底
     if (!icon) {
       const hostname = new URL(url).hostname;
       icon = `https://www.google.com/s2/favicons?domain=${hostname}&sz=64`;
     }
 
-    const result = { title, desc, icon, url };
-    cache.set(url, result);
+    return { title, desc, icon, url };
 
-    return result;
-
-  } catch (err) {
-    // ===== 请求失败兜底 =====
+  } catch (e) {
     const hostname = new URL(url).hostname;
 
     return {
@@ -133,14 +125,15 @@ async function fetchMeta(url) {
 }
 
 /**
- * Hexo Tag（✅ 正确 async 写法）
+ * Hexo Tag（同步，无 Promise）
  */
 hexo.extend.tag.register('linkcard', function(args) {
   const url = args[0];
   if (!url) return '';
 
-  return fetchMeta(url).then(meta => {
-    return `
+  const meta = fetchMeta(url);
+
+  return `
 <div class="link-card">
   <a href="${meta.url}" target="_blank" rel="noopener">
     <div class="link-card-content">
@@ -155,5 +148,4 @@ hexo.extend.tag.register('linkcard', function(args) {
   </a>
 </div>
 `;
-  });
-}, { async: true });
+});
