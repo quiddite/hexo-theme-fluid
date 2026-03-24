@@ -27,3 +27,7 @@ body {
 .main-content {
   background-color: #fbf4e2;
 }
+.post-content,
+.page-content {
+  background-color: #fbf4e2 !important;
+}
