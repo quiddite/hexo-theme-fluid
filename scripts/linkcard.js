@@ -22,7 +22,6 @@ function normalizeUrl(base, relative) {
 function cleanText(str) {
   return (str || '')
     .replace(/\s+/g, ' ')
-    .replace(/\n/g, ' ')
     .trim()
     .slice(0, 120);
 }
@@ -38,7 +37,7 @@ function cleanTitle(title) {
 }
 
 /**
- * 获取 favicon（三级 fallback）
+ * favicon（三级 fallback）
  */
 function resolveIcon($, url) {
   const u = new URL(url);
@@ -51,19 +50,18 @@ function resolveIcon($, url) {
     $('link[rel="apple-touch-icon"]').attr('href');
 
   if (icon) {
-    icon = normalizeUrl(url, icon);
-    return icon;
+    return normalizeUrl(url, icon);
   }
 
   // fallback 1: /favicon.ico
-  return `${origin}/favicon.ico` || 
+  return `${origin}/favicon.ico` ||
          `https://www.google.com/s2/favicons?domain=${hostname}&sz=64`;
 }
 
 /**
- * 获取描述（严格策略，避免抓正文）
+ * 描述（严格策略）
  */
-function resolveDescription($, url) {
+function resolveDescription($) {
   let desc =
     $('meta[property="og:description"]').attr('content') ||
     $('meta[name="description"]').attr('content');
@@ -71,7 +69,6 @@ function resolveDescription($, url) {
   if (!desc) {
     const firstP = $('p').first().text().trim();
 
-    // 严格限制长度，避免抓正文
     if (firstP.length > 20 && firstP.length < 120) {
       desc = firstP;
     }
@@ -105,13 +102,13 @@ async function fetchMeta(url) {
 
     title = cleanTitle(title);
 
-    // ===== DESCRIPTION =====
-    let desc = resolveDescription($, url);
+    // ===== DESC =====
+    let desc = resolveDescription($);
 
     // ===== ICON =====
     let icon = resolveIcon($, url);
 
-    // ===== 兜底 favicon（确保一定有）
+    // 最终兜底（保证一定有）
     if (!icon) {
       const hostname = new URL(url).hostname;
       icon = `https://www.google.com/s2/favicons?domain=${hostname}&sz=64`;
@@ -121,8 +118,9 @@ async function fetchMeta(url) {
     cache.set(url, result);
 
     return result;
+
   } catch (err) {
-    // ===== 失败兜底 =====
+    // ===== 请求失败兜底 =====
     const hostname = new URL(url).hostname;
 
     return {
@@ -135,15 +133,14 @@ async function fetchMeta(url) {
 }
 
 /**
- * Hexo Tag: {% linkcard url %}
+ * Hexo Tag（✅ 正确 async 写法）
  */
-hexo.extend.tag.register('linkcard', async function(args) {
+hexo.extend.tag.register('linkcard', function(args) {
   const url = args[0];
   if (!url) return '';
 
-  const meta = await fetchMeta(url);
-
-  return `
+  return fetchMeta(url).then(meta => {
+    return `
 <div class="link-card">
   <a href="${meta.url}" target="_blank" rel="noopener">
     <div class="link-card-content">
@@ -158,4 +155,5 @@ hexo.extend.tag.register('linkcard', async function(args) {
   </a>
 </div>
 `;
-});
+  });
+}, { async: true });
