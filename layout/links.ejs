@@ -8,6 +8,10 @@ page.banner_mask_alpha = theme.links.banner_mask_alpha
 page.comment = theme.links.comments.type
 %>
 
+<div class="text1">
+    <%- "math seminars" %>
+  </div>
+
 <div class="row links">
   <% for(const each of theme.links.items || []) { %>
     <% if (!each.title || !each.link) continue %>
